@@ -10,6 +10,7 @@ from datetime import date
 if "show_result" not in st.session_state:
     st.session_state.show_result = False
 
+st.image("logo.png", width=200)
 # ---------------- TITLE ----------------
 st.title("🏥 Nearest Nutrition Clinic Finder")
 
