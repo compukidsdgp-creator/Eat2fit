@@ -241,8 +241,8 @@ if "lead_submitted" in st.session_state and st.session_state.lead_submitted:
             with col2:
                 st.write(" ")
                 st.write(" ")
-                st.markdown(f"[📞 Call](tel:{clinic['contact']})")
-                st.markdown(f"[💬 WhatsApp](https://wa.me/{clinic['contact']})")
+                #st.markdown(f"[📞 Call](tel:{clinic['contact']})")
+                #st.markdown(f"[💬 WhatsApp](https://wa.me/{clinic['contact']})")
                 
                 # ---------------- BUTTON STYLE ----------------
             st.markdown(f"""
