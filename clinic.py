@@ -56,14 +56,14 @@ locations = {
 
 # ---------------- CLINICS ----------------
 clinics = [
-    {"name": "Aloka Medicare", "coords": (22.5257, 88.3525), "address": "Sarat Bose Road, Kolkata", "contact": "09609222208", "services": "Weight Loss, Diet Plan"},
-    {"name": "Hope Nursing Home", "coords": (23.6236, 87.1306), "address": "Raniganj", "contact": "09609222208", "services": "Diabetes Diet"},
-    {"name": "Aviskar Diagnostic", "coords": (23.5500, 87.2900), "address": "Durgapur", "contact": "09609222208", "services": "Fitness Diet"},
-    {"name": "Prayas Foundation", "coords": (23.5450, 87.2950), "address": "Durgapur", "contact": "09090909090", "services": "Kids Diet"},
-    {"name": "Life Support Medical", "coords": (23.5405, 87.2955), "address": "Durgapur", "contact": "09609222208", "services": "General Nutrition"},
-    {"name": "Meditree Pharma", "coords": (23.6820, 86.9750), "address": "Asansol", "contact": "09609222208", "services": "Nutrition"},
-    {"name": "Annapurna Medical Hall", "coords": (23.6880, 86.9800), "address": "Asansol", "contact": "09609222208", "services": "Diet Plan"},
-    {"name": "Hill View Hospital", "coords": (23.6895, 86.9835), "address": "Asansol", "contact": "09609222208", "services": "General Care"}
+    {"name": "Aloka Medicare", "coords": (22.5257, 88.3525), "address": "Sarat Bose Road, Kolkata", "contact": "9609222208", "services": "Weight Loss, Diet Plan"},
+    {"name": "Hope Nursing Home", "coords": (23.6236, 87.1306), "address": "Raniganj", "contact": "9609222208", "services": "Diabetes Diet"},
+    {"name": "Aviskar Diagnostic", "coords": (23.5500, 87.2900), "address": "Durgapur", "contact": "9609222207", "services": "Fitness Diet"},
+    {"name": "Prayas Foundation", "coords": (23.5450, 87.2950), "address": "Durgapur", "contact": "9090909090", "services": "Kids Diet"},
+    {"name": "Life Support Medical", "coords": (23.5405, 87.2955), "address": "Durgapur", "contact": "9609222208", "services": "General Nutrition"},
+    {"name": "Meditree Pharma", "coords": (23.6820, 86.9750), "address": "Asansol", "contact": "9609222208", "services": "Nutrition"},
+    {"name": "Annapurna Medical Hall", "coords": (23.6880, 86.9800), "address": "Asansol", "contact": "9609222208", "services": "Diet Plan"},
+    {"name": "Hill View Hospital", "coords": (23.6895, 86.9835), "address": "Asansol", "contact": "9609222208", "services": "General Care"}
 ]
 
 # ---------------- FORM ----------------
@@ -174,16 +174,47 @@ if "lead_submitted" in st.session_state and st.session_state.lead_submitted:
     st.subheader("📞 Contact Clinic")
 
     # CALL BUTTON (clickable)
-    st.markdown(f"[📞 Call Now](tel:{nearest['contact']})")
+    phone = nearest["contact"]
+    name = st.session_state.get("name", "Patient")
 
-    # WHATSAPP LINK
-    whatsapp_number = nearest["contact"]
+    # WhatsApp message
+    message = f"Hello, I am {name}. I would like to consult at {nearest['name']}."
+    whatsapp_url = f"https://wa.me/{phone}?text={message}"
 
-    message = f"Hello, I am {st.session_state.name}. I would like to consult at {nearest['name']}."
+    # ---------------- BUTTON STYLE ----------------
+    st.markdown(f"""
+    <div style="display:flex; gap:20px;">
 
-    whatsapp_url = f"https://wa.me/{whatsapp_number}?text={message}"
+    <a href="tel:{phone}">
+        <button style="
+            background-color:#28a745;
+            color:white;
+            padding:12px 20px;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;">
+            📞 Call Now
+        </button>
+    </a>
 
-    st.markdown(f"[💬 Chat on WhatsApp]({whatsapp_url})")
+    <a href="{whatsapp_url}" target="_blank">
+        <button style="
+            background-color:#25D366;
+            color:white;
+            padding:12px 20px;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;">
+            💬 WhatsApp
+        </button>
+    </a>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    
 
     st.balloons()
 
