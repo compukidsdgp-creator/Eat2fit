@@ -56,14 +56,14 @@ locations = {
 
 # ---------------- CLINICS ----------------
 clinics = [
-    {"name": "Aloka Medicare", "coords": (22.5257, 88.3525), "address": "Sarat Bose Road, Kolkata", "contact": "+91 9609222208", "services": "Weight Loss, Diet Plan"},
-    {"name": "Hope Nursing Home", "coords": (23.6236, 87.1306), "address": "Raniganj", "contact": "+91 9609222208", "services": "Diabetes Diet"},
-    {"name": "Aviskar Diagnostic", "coords": (23.5500, 87.2900), "address": "Durgapur", "contact": "+91 9609222208", "services": "Fitness Diet"},
-    {"name": "Prayas Foundation", "coords": (23.5450, 87.2950), "address": "Durgapur", "contact": "+91 9609222208", "services": "Kids Diet"},
-    {"name": "Life Support Medical", "coords": (23.5405, 87.2955), "address": "Durgapur", "contact": "+91 9609222208", "services": "General Nutrition"},
-    {"name": "Meditree Pharma", "coords": (23.6820, 86.9750), "address": "Asansol", "contact": "+91 9609222208", "services": "Nutrition"},
-    {"name": "Annapurna Medical Hall", "coords": (23.6880, 86.9800), "address": "Asansol", "contact": "+91 9609222208", "services": "Diet Plan"},
-    {"name": "Hill View Hospital", "coords": (23.6895, 86.9835), "address": "Asansol", "contact": "+91 9609222208", "services": "General Care"}
+    {"name": "Aloka Medicare", "coords": (22.5257, 88.3525), "address": "Sarat Bose Road, Kolkata", "contact": "9609222208", "services": "Weight Loss, Diet Plan"},
+    {"name": "Hope Nursing Home", "coords": (23.6236, 87.1306), "address": "Raniganj", "contact": "9609222208", "services": "Diabetes Diet"},
+    {"name": "Aviskar Diagnostic", "coords": (23.5500, 87.2900), "address": "Durgapur", "contact": "9609222207", "services": "Fitness Diet"},
+    {"name": "Prayas Foundation", "coords": (23.5450, 87.2950), "address": "Durgapur", "contact": "9090909090", "services": "Kids Diet"},
+    {"name": "Life Support Medical", "coords": (23.5405, 87.2955), "address": "Durgapur", "contact": "9609222208", "services": "General Nutrition"},
+    {"name": "Meditree Pharma", "coords": (23.6820, 86.9750), "address": "Asansol", "contact": "9609222208", "services": "Nutrition"},
+    {"name": "Annapurna Medical Hall", "coords": (23.6880, 86.9800), "address": "Asansol", "contact": "9609222208", "services": "Diet Plan"},
+    {"name": "Hill View Hospital", "coords": (23.6895, 86.9835), "address": "Asansol", "contact": "9609222208", "services": "General Care"}
 ]
 
 # ---------------- FORM ----------------
@@ -213,15 +213,38 @@ if "lead_submitted" in st.session_state and st.session_state.lead_submitted:
 
     </div>
     """, unsafe_allow_html=True)
-
-    
+ 
 
     st.balloons()
 
     # ---------------- ALL CLINICS ----------------
-    st.subheader("📊 All Clinics Distance")
-    for r in results:
-        st.write(f"{r['name']} → {r['distance']} km")
+    st.subheader("🏥 All Clinics")
+
+    for clinic in results:
+
+        is_nearest = clinic["name"] == nearest["name"]
+
+        with st.container():
+
+            # Highlight nearest
+            if is_nearest:
+                st.markdown("### 🏆 Nearest Clinic")
+
+            col1, col2 = st.columns([3,1])
+
+            with col1:
+                st.markdown(f"### 🏥 {clinic['name']}")
+                st.write(f"📍 Distance: {clinic['distance']} km")
+                st.write(f"📌 Address: {clinic['address']}")
+                st.write(f"💼 Services: {clinic['services']}")
+
+            with col2:
+                st.write(" ")
+                st.write(" ")
+                st.markdown(f"[📞 Call](tel:{clinic['contact']})")
+                st.markdown(f"[💬 WhatsApp](https://wa.me/{clinic['contact']})")
+
+            st.divider()
 
     # ---------------- MAP ----------------
     st.subheader("🗺️ Clinic Map")
