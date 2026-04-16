@@ -243,6 +243,39 @@ if "lead_submitted" in st.session_state and st.session_state.lead_submitted:
                 st.write(" ")
                 st.markdown(f"[📞 Call](tel:{clinic['contact']})")
                 st.markdown(f"[💬 WhatsApp](https://wa.me/{clinic['contact']})")
+                
+                # ---------------- BUTTON STYLE ----------------
+            st.markdown(f"""
+            <div style="display:flex; gap:20px;">
+
+            <a href="tel:{phone}">
+                <button style="
+                    background-color:#28a745;
+                    color:white;
+                    padding:12px 20px;
+                    border:none;
+                    border-radius:8px;
+                    font-size:16px;
+                    cursor:pointer;">
+                    📞 Call Now
+                </button>
+            </a>
+
+            <a href="{whatsapp_url}" target="_blank">
+                <button style="
+                    background-color:#25D366;
+                    color:white;
+                    padding:12px 20px;
+                    border:none;
+                    border-radius:8px;
+                    font-size:16px;
+                    cursor:pointer;">
+                    💬 WhatsApp
+                </button>
+            </a>
+
+            </div>
+            """, unsafe_allow_html=True)
 
             st.divider()
 
