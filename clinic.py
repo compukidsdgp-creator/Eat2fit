@@ -130,158 +130,158 @@ if st.session_state.show_result:
 
     import csv
 
-# ---------------- BOOK BUTTON ----------------
-if st.button("📅 Book Appointment", key="book_btn"):
+    # ---------------- BOOK BUTTON ----------------
+    if st.button("📅 Book Appointment", key="book_btn"):
 
-    st.session_state.show_form = True
+        st.session_state.show_form = True
 
-# ---------------- SHOW FORM ----------------
-if "show_form" in st.session_state and st.session_state.show_form:
+    # ---------------- SHOW FORM ----------------
+    if "show_form" in st.session_state and st.session_state.show_form:
 
-    st.subheader("📝 Enter Your Details")
+        st.subheader("📝 Enter Your Details")
 
-    with st.form("lead_form"):
-        name = st.text_input("Patient Name")
-        phone = st.text_input("Phone Number")
+        with st.form("lead_form"):
+            name = st.text_input("Patient Name")
+            phone = st.text_input("Phone Number")
 
-        submit_lead = st.form_submit_button("Proceed")
+            submit_lead = st.form_submit_button("Proceed")
 
-    # ---------------- AFTER SUBMIT ----------------
-    if submit_lead:
+        # ---------------- AFTER SUBMIT ----------------
+        if submit_lead:
 
-        if name == "" or phone == "":
-            st.error("Please fill all details")
-        else:
-            # Save to CSV
-            with open("leads.csv", "a", newline="") as file:
-                writer = csv.writer(file)
-                writer.writerow([
-                    name,
-                    phone,
-                    nearest["name"],
-                    nearest["address"]
-                ])
+            if name == "" or phone == "":
+                st.error("Please fill all details")
+            else:
+                # Save to CSV
+                with open("leads.csv", "a", newline="") as file:
+                    writer = csv.writer(file)
+                    writer.writerow([
+                        name,
+                        phone,
+                        nearest["name"],
+                        nearest["address"]
+                    ])
 
-            st.success("✅ Details Saved! Now contact clinic below 👇")
+                st.success("✅ Details Saved! Now contact clinic below 👇")
 
-            # Store state
-            st.session_state.lead_submitted = True
-            st.session_state.name = name
+                # Store state
+                st.session_state.lead_submitted = True
+                st.session_state.name = name
 
-# ---------------- SHOW CONTACT OPTIONS ----------------
-if "lead_submitted" in st.session_state and st.session_state.lead_submitted:
+    # ---------------- SHOW CONTACT OPTIONS ----------------
+    if "lead_submitted" in st.session_state and st.session_state.lead_submitted:
 
-    st.subheader("📞 Contact Clinic")
+        st.subheader("📞 Contact Clinic")
 
-    # CALL BUTTON (clickable)
-    phone = nearest["contact"]
-    name = st.session_state.get("name", "Patient")
+        # CALL BUTTON (clickable)
+        phone = nearest["contact"]
+        name = st.session_state.get("name", "Patient")
 
-    # WhatsApp message
-    message = f"Hello, I am {name}. I would like to consult at {nearest['name']}."
-    whatsapp_url = f"https://wa.me/{phone}?text={message}"
+        # WhatsApp message
+        message = f"Hello, I am {name}. I would like to consult at {nearest['name']}."
+        whatsapp_url = f"https://wa.me/{phone}?text={message}"
 
-    # ---------------- BUTTON STYLE ----------------
-    st.markdown(f"""
-    <div style="display:flex; gap:20px;">
+        # ---------------- BUTTON STYLE ----------------
+        st.markdown(f"""
+        <div style="display:flex; gap:20px;">
 
-    <a href="tel:{phone}">
-        <button style="
-            background-color:#28a745;
-            color:white;
-            padding:12px 20px;
-            border:none;
-            border-radius:8px;
-            font-size:16px;
-            cursor:pointer;">
-            📞 Call Now
-        </button>
-    </a>
+        <a href="tel:{phone}">
+            <button style="
+                background-color:#28a745;
+                color:white;
+                padding:12px 20px;
+                border:none;
+                border-radius:8px;
+                font-size:16px;
+                cursor:pointer;">
+                📞 Call Now
+            </button>
+        </a>
 
-    <a href="{whatsapp_url}" target="_blank">
-        <button style="
-            background-color:#25D366;
-            color:white;
-            padding:12px 20px;
-            border:none;
-            border-radius:8px;
-            font-size:16px;
-            cursor:pointer;">
-            💬 WhatsApp
-        </button>
-    </a>
+        <a href="{whatsapp_url}" target="_blank">
+            <button style="
+                background-color:#25D366;
+                color:white;
+                padding:12px 20px;
+                border:none;
+                border-radius:8px;
+                font-size:16px;
+                cursor:pointer;">
+                💬 WhatsApp
+            </button>
+        </a>
 
-    </div>
-    """, unsafe_allow_html=True)
- 
+        </div>
+        """, unsafe_allow_html=True)
+     
 
-    st.balloons()
+        st.balloons()
 
-    # ---------------- ALL CLINICS ----------------
-    st.subheader("🏥 All Clinics")
+        # ---------------- ALL CLINICS ----------------
+        st.subheader("🏥 All Clinics")
 
-    for clinic in results:
+        for clinic in results:
 
-        is_nearest = clinic["name"] == nearest["name"]
+            is_nearest = clinic["name"] == nearest["name"]
 
-        with st.container():
+            with st.container():
 
-            # Highlight nearest
-            if is_nearest:
-                st.markdown("### 🏆 Nearest Clinic")
+                # Highlight nearest
+                if is_nearest:
+                    st.markdown("### 🏆 Nearest Clinic")
 
-            col1, col2 = st.columns([3,1])
+                col1, col2 = st.columns([3,1])
 
-            with col1:
-                st.markdown(f"### 🏥 {clinic['name']}")
-                st.write(f"📍 Distance: {clinic['distance']} km")
-                st.write(f"📌 Address: {clinic['address']}")
-                st.write(f"💼 Services: {clinic['services']}")
+                with col1:
+                    st.markdown(f"### 🏥 {clinic['name']}")
+                    st.write(f"📍 Distance: {clinic['distance']} km")
+                    st.write(f"📌 Address: {clinic['address']}")
+                    st.write(f"💼 Services: {clinic['services']}")
 
-            with col2:
-                st.write(" ")
-                st.write(" ")
-                #st.markdown(f"[📞 Call](tel:{clinic['contact']})")
-                #st.markdown(f"[💬 WhatsApp](https://wa.me/{clinic['contact']})")
-                
-                # ---------------- BUTTON STYLE ----------------
-            st.markdown(f"""
-            <div style="display:flex; gap:20px;">
+                with col2:
+                    st.write(" ")
+                    st.write(" ")
+                    #st.markdown(f"[📞 Call](tel:{clinic['contact']})")
+                    #st.markdown(f"[💬 WhatsApp](https://wa.me/{clinic['contact']})")
+                    
+                    # ---------------- BUTTON STYLE ----------------
+                st.markdown(f"""
+                <div style="display:flex; gap:20px;">
 
-            <a href="tel:{phone}">
-                <button style="
-                    background-color:#28a745;
-                    color:white;
-                    padding:12px 20px;
-                    border:none;
-                    border-radius:8px;
-                    font-size:16px;
-                    cursor:pointer;">
-                    📞 Call Now
-                </button>
-            </a>
+                <a href="tel:{phone}">
+                    <button style="
+                        background-color:#28a745;
+                        color:white;
+                        padding:12px 20px;
+                        border:none;
+                        border-radius:8px;
+                        font-size:16px;
+                        cursor:pointer;">
+                        📞 Call Now
+                    </button>
+                </a>
 
-            <a href="{whatsapp_url}" target="_blank">
-                <button style="
-                    background-color:#25D366;
-                    color:white;
-                    padding:12px 20px;
-                    border:none;
-                    border-radius:8px;
-                    font-size:16px;
-                    cursor:pointer;">
-                    💬 WhatsApp
-                </button>
-            </a>
+                <a href="{whatsapp_url}" target="_blank">
+                    <button style="
+                        background-color:#25D366;
+                        color:white;
+                        padding:12px 20px;
+                        border:none;
+                        border-radius:8px;
+                        font-size:16px;
+                        cursor:pointer;">
+                        💬 WhatsApp
+                    </button>
+                </a>
 
-            </div>
-            """, unsafe_allow_html=True)
+                </div>
+                """, unsafe_allow_html=True)
 
-            st.divider()
+                st.divider()
 
-    # ---------------- MAP ----------------
-    st.subheader("🗺️ Clinic Map")
-    st_folium(m, width=700, height=500)
- 
+        # ---------------- MAP ----------------
+        st.subheader("🗺️ Clinic Map")
+        st_folium(m, width=700, height=500)
+         
 
 
