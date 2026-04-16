@@ -1,5 +1,5 @@
 streamlit 
-geopy.distance 
+geopy 
 folium
 streamlit_folium 
 csv
