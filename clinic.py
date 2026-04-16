@@ -12,7 +12,7 @@ if "show_result" not in st.session_state:
 
 st.image("logo.png", width=300)
 # ---------------- TITLE ----------------
-st.title("🏥 Nearest Nutrition Clinic Finder")
+st.title("🏥 Find Our Nearest Clinic ")
 
 # ---------------- USER LOCATIONS ----------------
 locations = {
@@ -122,7 +122,7 @@ if st.session_state.show_result:
     nearest = results[0]
 
     # ---------------- OUTPUT ----------------
-    st.subheader("🏆 Nearest Clinic")
+    st.subheader("Nearest Clinic")
     st.success(f"{nearest['name']} ({nearest['distance']} km away)")
 
     st.write("📍 Address:", nearest["address"])
@@ -219,7 +219,7 @@ if st.session_state.show_result:
         st.balloons()
 
         # ---------------- ALL CLINICS ----------------
-        st.subheader("🏥 All Clinics")
+        st.subheader("🏥 All Our Clinics")
 
         for clinic in results:
 
@@ -229,7 +229,7 @@ if st.session_state.show_result:
 
                 # Highlight nearest
                 if is_nearest:
-                    st.markdown("### 🏆 Nearest Clinic")
+                    st.markdown("### Nearest Clinic")
 
                 col1, col2 = st.columns([3,1])
 
